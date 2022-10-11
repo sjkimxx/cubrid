@@ -9,7 +9,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-20.04
-    options: --user root
     env:
       SONAR_SCANNER_VERSION: 4.7.0.2747
       SONAR_SERVER_URL: "https://sonarcloud.io"
