@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     env:
       SONAR_SCANNER_VERSION: 4.7.0.2747
       SONAR_SERVER_URL: "https://sonarcloud.io"
@@ -36,12 +36,30 @@ jobs:
           curl -sSLo $HOME/.sonar/build-wrapper-linux-x86.zip ${{ env.BUILD_WRAPPER_DOWNLOAD_URL }}
           unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $HOME/.sonar/
           echo "$HOME/.sonar/build-wrapper-linux-x86" >> $GITHUB_PATH
+      - name: Set up build
+        env: 
+          CC: gcc-8
+          CXX: g++-8
+          MAKEFLAGS: -j4
+        run: |
+          add-apt-repository --yes ppa:ubuntu-toolchain-r/test
+          apt-get install -y gcc-8 g++-8 cmake systemtap-sdt-dev libelf-dev ant liblz4-tool libncurses5-dev libncursesw5-dev
+          apt-get install openjdk-8-jdk -y
+          update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 10
+          update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 10
+          curl -L --insecure https://ftp.gnu.org/gnu/bison/bison-3.0.5.tar.gz | tar xzvf - \
+          && cd bison-3.0.5 && ./configure --prefix=/usr && make all install \
+          && rm -rf bison-3.0.5
+          apt-get install libtool automake
       - name: Run build-wrapper
         run: |
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} 
-      - name: Run sonar-scanner
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          sonar-scanner --define sonar.host.url="${{ env.SONAR_SERVER_URL }}" --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
+          # build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} 
+          cmake -E make_directory build
+          cmake -E chdir build cmake ..
+          cmake --build build
+      #- name: Run sonar-scanner
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #  run: |
+      #    sonar-scanner --define sonar.host.url="${{ env.SONAR_SERVER_URL }}" --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
