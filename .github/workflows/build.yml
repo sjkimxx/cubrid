@@ -54,9 +54,11 @@ jobs:
           #sudo apt-get install libtool automake
       - name: Run build-wrapper
         run: |
+          ls -al /usr/bin/cc
+          ls -al /usr/bin/gcc*
           # build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} 
-          cmake -E make_directory build
-          cmake -E chdir build cmake -DCMAKE_BUILD_TYPE:STRING=Release ..
+          #cmake -E make_directory build
+          #cmake -E chdir build cmake -DCMAKE_BUILD_TYPE:STRING=Release ..
           #cmake --build build
       #- name: Run sonar-scanner
       #  env:
