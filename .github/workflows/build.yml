@@ -9,6 +9,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-20.04
+    options: --user root
     env:
       SONAR_SCANNER_VERSION: 4.7.0.2747
       SONAR_SERVER_URL: "https://sonarcloud.io"
@@ -42,15 +43,15 @@ jobs:
           CXX: g++-8
           MAKEFLAGS: -j4
         run: |
-          add-apt-repository --yes ppa:ubuntu-toolchain-r/test
-          apt-get install -y gcc-8 g++-8 cmake systemtap-sdt-dev libelf-dev ant liblz4-tool libncurses5-dev libncursesw5-dev
-          apt-get install openjdk-8-jdk -y
-          update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 10
-          update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 10
+          sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
+          sudo apt-get install -y gcc-8 g++-8 cmake systemtap-sdt-dev libelf-dev ant liblz4-tool libncurses5-dev libncursesw5-dev
+          sudo apt-get install openjdk-8-jdk -y
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 10
+          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 10
           curl -L --insecure https://ftp.gnu.org/gnu/bison/bison-3.0.5.tar.gz | tar xzvf - \
           && cd bison-3.0.5 && ./configure --prefix=/usr && make all install \
           && rm -rf bison-3.0.5
-          apt-get install libtool automake
+          sudo apt-get install libtool automake
       - name: Run build-wrapper
         run: |
           # build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} 
