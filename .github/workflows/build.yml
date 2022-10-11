@@ -51,13 +51,13 @@ jobs:
           curl -L --insecure https://ftp.gnu.org/gnu/bison/bison-3.0.5.tar.gz | tar xzvf - \
           && cd bison-3.0.5 && ./configure --prefix=/usr && make all install \
           && rm -rf bison-3.0.5
-          sudo apt-get install libtool automake
+          #sudo apt-get install libtool automake
       - name: Run build-wrapper
         run: |
           # build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} 
           cmake -E make_directory build
-          cmake -E chdir build cmake ..
-          cmake --build build
+          cmake -E chdir build cmake -DCMAKE_BUILD_TYPE:STRING=Release ..
+          #cmake --build build
       #- name: Run sonar-scanner
       #  env:
       #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
