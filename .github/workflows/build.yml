@@ -44,7 +44,7 @@ jobs:
           MAKEFLAGS: -j4
         run: |
           sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
-          sudo apt-get install -y gcc-8 g++-8 cmake systemtap-sdt-dev libelf-dev ant liblz4-tool libncurses5-dev libncursesw5-dev
+          sudo apt-get install -y gcc-8 g++-8 cmake systemtap-sdt-dev libelf-dev ant liblz4-tool libncurses5-dev libncursesw5-dev libfl-dev
           sudo apt-get install openjdk-8-jdk -y
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 10
           sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 10
