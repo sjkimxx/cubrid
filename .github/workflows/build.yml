@@ -54,11 +54,9 @@ jobs:
           #sudo apt-get install libtool automake
       - name: Run build-wrapper
         run: |
-          ls -al /home/runner/work/cubrid/
-          ls -al /home/runner/work/cubrid/cubrid
           # build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} 
-          #cmake -E make_directory build
-          #cmake -E chdir build cmake -DCMAKE_BUILD_TYPE:STRING=Release ..
+          cmake -E make_directory build
+          cmake -E chdir build cmake -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_C_COMPILER=gcc-8 -DCMAKE_CXX_COMPILER=g++-8 ..
           #cmake --build build
       #- name: Run sonar-scanner
       #  env:
