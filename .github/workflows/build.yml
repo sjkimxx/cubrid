@@ -54,7 +54,7 @@ jobs:
           #sudo apt-get install libtool automake
       - name: Run build-wrapper
         run: |
-          grep -r FLEX_INCLUDE_DIR .
+          which flex
           ls -al /usr/include
           # build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} 
           #cmake -E make_directory build
