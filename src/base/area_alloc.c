@@ -79,6 +79,8 @@ pthread_mutex_t area_List_lock = PTHREAD_MUTEX_INITIALIZER;
 #define LF_AREA_BITMAP_USAGE_RATIO LF_BITMAP_FULL_USAGE_RATIO
 #endif
 
+
+
 /*
  * Volatile access to a variable
  */
