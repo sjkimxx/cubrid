@@ -53,8 +53,7 @@ jobs:
           && cd bison-3.0.5 && ./configure --prefix=/usr && sudo make all install \
           && rm -rf bison-3.0.5
           sudo apt-get install automake
-          cd -
-          # aldjflk
+          cd - # aldjflk
       - name: Run build-wrapper
         run: |
           # build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} 
